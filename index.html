@@ -2,64 +2,96 @@
 <html lang="so" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Imtixaanka Fiqhiga Salaadda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+        * {
+            font-family: 'Tajawal', sans-serif;
+            box-sizing: border-box;
+        }
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f3f4f6;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+        }
+        .quiz-card {
+            background: #ffffff;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+        .opt-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .opt-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="flex items-center justify-center p-3 sm:p-6 min-h-screen">
 
-    <div class="max-w-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden" id="quiz-card">
-        <!-- Header -->
-        <div class="bg-emerald-600 text-white p-6 text-center">
-            <h1 class="text-2xl font-bold">Imtixaanka Fiqhiga Salaadda</h1>
-            <p class="text-emerald-100 text-sm mt-1">Lagu diyaariyay ardayda kooxda WhatsApp-ka</p>
+    <div class="w-full max-w-lg quiz-card rounded-3xl overflow-hidden my-auto border border-slate-700/10">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 p-6 text-white text-center relative">
+            <div class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold tracking-wide mb-2 text-emerald-100">
+                KOOSKA FIQHIGA
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Imtixaanka Fiqhiga Salaadda</h1>
+            <p class="text-emerald-100 text-xs sm:text-sm mt-1 opacity-90">Ka jawaab su'aalaha si aad u ogaato heerka aqoontaada</p>
         </div>
 
         <!-- Already Completed Screen -->
         <div id="already-completed" class="hidden p-8 text-center">
-            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">!</div>
-            <h2 class="text-xl font-bold text-gray-800 mb-2">Hore ayaad u kaaga jawaabtay!</h2>
-            <p class="text-gray-600">Imtixaankan waxaa looga jawaabi karaa oo kaliya **hal mar**. Ma dib u geli kartid.</p>
+            <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-extrabold">
+                !
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Hore ayaad u kaaga jawaabtay!</h2>
+            <p class="text-slate-600 text-sm leading-relaxed">Imtixaankan waxaa looga jawaabi karaa oo kaliya **hal mar**. Ma dib u geli kartid.</p>
         </div>
 
         <!-- Quiz Container -->
-        <div id="quiz-body" class="p-6">
-            <!-- Progress Bar -->
-            <div class="mb-6">
-                <div class="flex justify-between text-xs font-semibold text-gray-500 mb-1">
-                    <span id="question-number">Su'aasha 1 ee 6</span>
-                    <span id="score-tracker">Dhibcaha: 0</span>
+        <div id="quiz-body" class="p-5 sm:p-7">
+            
+            <!-- Warning Box / Digniin -->
+            <div class="mb-5 bg-amber-50 border-l-4 border-amber-500 p-4 rounded-xl text-amber-900 shadow-sm">
+                <div class="flex items-center mb-1.5">
+                    <span class="text-amber-600 font-black text-lg mr-2">⚠️</span>
+                    <h3 class="font-extrabold text-xs uppercase tracking-wider text-amber-800">Digniin Muhiim Ah:</h3>
                 </div>
-                <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="bg-emerald-500 h-2.5 w-0 transition-all duration-300"></div>
+                <ul class="text-xs font-bold space-y-1 pl-1 text-amber-800/90 leading-relaxed">
+                    <li>1. Kaliya <strong>hal mar</strong> ayaa laga shaqayn karaa, ka dib wuu kaa xirmaidayaa link-gan.</li>
+                    <li>2. Sawir ka soo qaad (Screenshot) natiijadaada, ka dibna <strong>macallinka u soo dir</strong>.</li>
+                </ul>
+            </div>
+
+            <!-- Progress Bar & Header Stats -->
+            <div class="mb-6 bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+                <div class="flex justify-between items-center text-xs font-bold text-slate-600 mb-2">
+                    <span id="question-number" class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg">Su'aasha 1 / 10</span>
+                    <span id="score-tracker" class="bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg">Dhibcaha: 0</span>
+                </div>
+                <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden p-0.5">
+                    <div id="progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-300 w-0"></div>
                 </div>
             </div>
 
             <!-- Question & Options -->
             <div id="question-container">
-                <h2 id="question-text" class="text-lg font-bold text-gray-800 mb-4"></h2>
+                <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-800 mb-5 leading-snug"></h2>
                 
                 <!-- Options Container -->
                 <div id="options-container" class="space-y-3"></div>
 
-                <!-- Fill in the blank bank (if applicable) -->
-                <div id="word-bank" class="hidden mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                    <p class="text-xs font-semibold text-gray-500 mb-2">Astaanta ku habboon taabo:</p>
-                    <div id="word-bank-buttons" class="flex flex-wrap gap-2"></div>
+                <!-- Fill in the blank bank -->
+                <div id="word-bank" class="hidden mt-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <p class="text-xs font-bold text-slate-500 mb-3 text-center uppercase tracking-wider">Dooro lambarka ku habboon:</p>
+                    <div id="word-bank-buttons" class="flex flex-wrap justify-center gap-2.5"></div>
                 </div>
 
                 <!-- Feedback Message -->
-                <div id="feedback" class="hidden mt-4 p-3 rounded-lg text-sm font-semibold text-center"></div>
+                <div id="feedback" class="hidden mt-4 p-3.5 rounded-xl text-sm font-bold text-center"></div>
 
                 <!-- Next Button -->
-                <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-6 bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">
+                <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-6 bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-extrabold text-base shadow-lg shadow-emerald-600/30 transition transform active:scale-95">
                     Su'aasha Xigta &rarr;
                 </button>
             </div>
@@ -67,19 +99,23 @@
 
         <!-- Result Screen -->
         <div id="result-screen" class="hidden p-8 text-center">
-            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl font-extrabold shadow-inner">
                 ✓
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Habalayeok/Hambalyo!</h2>
-            <p class="text-gray-600 mb-6">Waad dhamaystaysay imtixaankii Fiqhiga Salaadda.</p>
+            <h2 class="text-2xl font-extrabold text-slate-800 mb-1">Hambalyo!</h2>
+            <p class="text-slate-500 text-sm mb-6">Waad dhamaystaysay imtixaankii Fiqhiga Salaadda.</p>
 
-            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6">
-                <p class="text-sm text-gray-500 uppercase tracking-wide">Natiijadaada Guud</p>
-                <p id="final-score" class="text-4xl font-extrabold text-emerald-600 my-2">0 / 6</p>
-                <p id="percentage-text" class="text-sm font-semibold text-gray-700"></p>
+            <div class="bg-gradient-to-b from-slate-50 to-slate-100 p-6 rounded-2xl border border-slate-200/80 mb-6 shadow-sm">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Natiijadaada Guud</p>
+                <p id="final-score" class="text-4xl font-black text-emerald-600 my-2">0 / 10</p>
+                <p id="percentage-text" class="text-sm font-bold text-slate-700"></p>
             </div>
 
-            <p class="text-xs text-gray-400">Jawaabahaaga waa la keydiyay, ma dib u geli kartid imtixaankan.</p>
+            <div class="bg-amber-100 border border-amber-300 p-3 rounded-xl text-amber-900 font-bold text-xs mb-4">
+                📸 Hadda sawir ka soo qaad (Screenshot) shaashaddan oo u dir macallinka!
+            </div>
+
+            <p class="text-xs text-slate-400 font-medium">Jawaabahaaga waa la keydiyay, ma dib u geli kartid imtixaankan.</p>
         </div>
     </div>
 
@@ -87,39 +123,63 @@
         const questions = [
             {
                 type: 'multiple',
-                question: 'Niyada salaadu maxay tahay xukunkeedu?',
-                options: ['Waa waajib', 'Waa sunno'],
+                question: '1. Niyada salaadu maxay tahay xukunkeedu?',
+                options: ['A) Waa waajib', 'B) Waa sunno'],
                 correct: 0
             },
             {
                 type: 'multiple',
-                question: 'Niyada in carrabka lagu dhawaaqo maxay tahay?',
-                options: ['Waa sunno', 'Waa bidco'],
+                question: '2. Niyada in carrabka lagu dhawaaqo maxay tahay?',
+                options: ['A) Waa sunno', 'B) Waa bidco'],
                 correct: 1
             },
             {
                 type: 'multiple',
-                question: 'Qofka marka uu takbiirsado halkee ayuu fiirinayaa?',
-                options: ['Makaanka sujuudda', 'Dhinaca midig', 'Hore ka direct'],
+                question: '3. Qofka marka uu takbiirsado halkee ayuu fiirinayaa?',
+                options: ['A) Makaanka sujuudda', 'B) Dhinaca midig', 'C) Hore ka direct'],
                 correct: 0
             },
             {
                 type: 'tf',
-                question: 'Salaada ma la aqbalaa weeso la\'aan?',
-                options: ['Haa', 'Maya'],
-                correct: 1 // Maya
+                question: '4. Salaada ma la aqbalaa weeso la\'aan?',
+                options: ['A) Haa', 'B) Maya'],
+                correct: 1
             },
             {
                 type: 'multiple',
-                question: 'Suratu Al-Faataxada in la aqriyo maxay tahay xukunkeeda salaadda?',
-                options: ['Waa sunno mu\'akkada ah', 'Rukni ka mid ah rukniyada salaadda', 'Waa mustaxab'],
+                question: '5. Suratu Al-Faataxada in la aqriyo maxay tahay xukunkeeda salaadda?',
+                options: ['A) Waa sunno mu\'akkada ah', 'B) Rukni ka mid ah rukniyada salaadda', 'C) Waa mustaxab'],
                 correct: 1
             },
             {
                 type: 'fill',
-                question: 'Tiri sunnooyinka rawaatibta ah ee salaadaha lagu dhiiri geliyo pooksa bannaan ku buuxi: Sunnooyinka rawaatibta ah waa ____ raka\'o.',
+                question: '6. Sunnooyinka rawaatibta ah ee salaadaha lagu dhiiri geliyo waa meeqa raka\'o?',
                 words: ['12', '10', '8', '14'],
                 correct: '12'
+            },
+            {
+                type: 'multiple',
+                question: '7. Tahajudka ama Salaadda Habeenkii xukunkeedu maxay tahay?',
+                options: ['A) Waa waajib', 'B) Waa sunno mu\'akkada ah', 'C) Waa fardhu kifaya'],
+                correct: 1
+            },
+            {
+                type: 'multiple',
+                question: '8. Tashahudka ugu horreeya ee salaadda 3 ama 4 raka\'o ah maxay tahay xukunkiisa?',
+                options: ['A) Waa waajib ka mid ah waajibadka', 'B) Waa rukni aan laga tegi karin', 'C) Waa sunno caadi ah'],
+                correct: 0
+            },
+            {
+                type: 'tf',
+                question: '9. Sujuuddu ma tahay rukni ka mid ah rukniyada salaadda?',
+                options: ['A) Haa', 'B) Maya'],
+                correct: 0
+            },
+            {
+                type: 'multiple',
+                question: '10. Marka uu qofku salaadda ka baxo maxay tahay waxa u dambeeya ee uu sameynayo?',
+                options: ['A) Tasliimka (Ku salaamidda midig iyo bidix)', 'B) In uu gacmaha kor u taago', 'C) In uu astaagfirullaah dhaho'],
+                correct: 0
             }
         ];
 
@@ -127,7 +187,6 @@
         let score = 0;
         let answered = false;
 
-        // Check if user has already taken the quiz
         window.onload = function() {
             if (localStorage.getItem('fiqhi_quiz_completed')) {
                 document.getElementById('quiz-body').classList.add('hidden');
@@ -140,7 +199,7 @@
         function loadQuestion() {
             answered = false;
             const q = questions[currentQuestion];
-            document.getElementById('question-number').innerText = `Su'aasha ${currentQuestion + 1} ee ${questions.length}`;
+            document.getElementById('question-number').innerText = `Su'aasha ${currentQuestion + 1} / ${questions.length}`;
             document.getElementById('score-tracker').innerText = `Dhibcaha: ${score}`;
             document.getElementById('progress-bar').style.width = `${((currentQuestion) / questions.length) * 100}%`;
             document.getElementById('question-text').innerText = q.question;
@@ -160,7 +219,7 @@
                 wordBank.classList.add('hidden');
                 q.options.forEach((opt, idx) => {
                     const btn = document.createElement('button');
-                    btn.className = 'w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-emerald-500 hover:bg-emerald-50 transition font-medium text-gray-700 flex justify-between items-center';
+                    btn.className = 'opt-btn w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition font-bold text-slate-700 text-sm flex justify-between items-center bg-white shadow-sm';
                     btn.innerText = opt;
                     btn.onclick = () => selectOption(idx, btn);
                     optionsContainer.appendChild(btn);
@@ -168,16 +227,15 @@
             } else if (q.type === 'fill') {
                 wordBank.classList.remove('hidden');
                 
-                // Display placeholder field
                 const inputDisplay = document.createElement('div');
                 inputDisplay.id = 'fill-display';
-                inputDisplay.className = 'w-full p-4 rounded-xl border-2 border-dashed border-gray-300 text-center font-bold text-gray-500 bg-gray-50 mb-3';
-                inputDisplay.innerText = '[ Taabo lambarka saxda ah ee hoose ]';
+                inputDisplay.className = 'w-full p-4 rounded-2xl border-2 border-dashed border-slate-300 text-center font-extrabold text-slate-400 bg-slate-50 mb-2 text-sm';
+                inputDisplay.innerText = '[ Dooro Lambarka Saxda ah ]';
                 optionsContainer.appendChild(inputDisplay);
 
                 q.words.forEach(word => {
                     const btn = document.createElement('button');
-                    btn.className = 'px-4 py-2 bg-emerald-100 text-emerald-800 rounded-lg font-bold hover:bg-emerald-200 transition';
+                    btn.className = 'opt-btn px-5 py-2.5 bg-emerald-100 text-emerald-800 rounded-xl font-extrabold text-base hover:bg-emerald-200 transition shadow-sm';
                     btn.innerText = word;
                     btn.onclick = () => selectFillOption(word, btn);
                     wordBankButtons.appendChild(btn);
@@ -191,20 +249,18 @@
 
             const q = questions[currentQuestion];
             const options = document.getElementById('options-container').children;
-            const feedback = document.getElementById('feedback');
 
             if (index === q.correct) {
                 score++;
-                btn.classList.remove('border-gray-200', 'hover:border-emerald-500');
-                btn.classList.add('border-emerald-600', 'bg-emerald-100', 'text-emerald-800');
+                btn.classList.remove('border-slate-200');
+                btn.classList.add('border-emerald-600', 'bg-emerald-100', 'text-emerald-900');
                 showFeedback(true, 'Sahiih! Jawaabtu waa sax.');
             } else {
-                btn.classList.remove('border-gray-200', 'hover:border-emerald-500');
-                btn.classList.add('border-red-500', 'bg-red-100', 'text-red-800');
+                btn.classList.remove('border-slate-200');
+                btn.classList.add('border-rose-500', 'bg-rose-100', 'text-rose-900');
                 
-                // Highlight correct answer
-                options[q.correct].classList.remove('border-gray-200');
-                options[q.correct].classList.add('border-emerald-600', 'bg-emerald-100', 'text-emerald-800');
+                options[q.correct].classList.remove('border-slate-200');
+                options[q.correct].classList.add('border-emerald-600', 'bg-emerald-100', 'text-emerald-900');
                 showFeedback(false, 'Qalad! Jawaabta saxda ah waa calaamadsan tahay.');
             }
 
@@ -219,14 +275,14 @@
             const q = questions[currentQuestion];
             const display = document.getElementById('fill-display');
 
-            display.innerText = word;
+            display.innerText = `${word} Raka'o`;
 
             if (word === q.correct) {
                 score++;
-                display.className = 'w-full p-4 rounded-xl border-2 border-emerald-600 text-center font-bold text-emerald-800 bg-emerald-100';
+                display.className = 'w-full p-4 rounded-2xl border-2 border-emerald-600 text-center font-extrabold text-emerald-900 bg-emerald-100 text-base';
                 showFeedback(true, 'Sahiih! 12 raka\'o waa jawaabta saxda ah.');
             } else {
-                display.className = 'w-full p-4 rounded-xl border-2 border-red-500 text-center font-bold text-red-800 bg-red-100';
+                display.className = 'w-full p-4 rounded-2xl border-2 border-rose-500 text-center font-extrabold text-rose-900 bg-rose-100 text-base';
                 showFeedback(false, `Qalad! Jawaabta saxda ah waa ${q.correct}.`);
             }
 
@@ -236,13 +292,13 @@
 
         function showFeedback(isCorrect, message) {
             const feedback = document.getElementById('feedback');
-            feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-red-100', 'text-red-800');
+            feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'bg-rose-100', 'text-rose-900');
             
             if (isCorrect) {
-                feedback.classList.add('bg-emerald-100', 'text-emerald-800');
+                feedback.classList.add('bg-emerald-100', 'text-emerald-900');
                 feedback.innerText = `✓ ${message}`;
             } else {
-                feedback.classList.add('bg-red-100', 'text-red-800');
+                feedback.classList.add('bg-rose-100', 'text-rose-900');
                 feedback.innerText = `✕ ${message}`;
             }
         }
@@ -257,7 +313,6 @@
         }
 
         function finishQuiz() {
-            // Save completion state to prevent retaking
             localStorage.setItem('fiqhi_quiz_completed', 'true');
 
             document.getElementById('quiz-body').classList.add('hidden');
@@ -270,8 +325,3 @@
     </script>
 </body>
 </html>
-```eof
-
-### Sida loo isticmaalo ama loo diro:
-1. Kaydi faylkan adigoo u bixinaya `index.html` ama `quiz.html`.
-2. Waxaad gashin kartaa degel bilaash ah sida **GitHub Pages**, **Netlify**, ama **Vercel** si aad u hesho halkan ku xuran (link) gaaban oo aad WhatsApp-ka ugu diro kartid ardayda.
