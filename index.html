@@ -39,7 +39,7 @@
             <p class="text-emerald-100 text-xs sm:text-sm mt-1 opacity-90">Ka jawaab su'aalaha si aad u ogaato heerka aqoontaada</p>
         </div>
 
-        <!-- Already Completed Screen -->
+        <!-- Already Completed Screen (Kaliya marka uu 10-ka su'aalood dhameeyo) -->
         <div id="already-completed" class="hidden p-8 text-center">
             <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-extrabold">
                 !
@@ -188,13 +188,27 @@
         let answered = false;
 
         window.onload = function() {
+            // Ka eeg localStorage haddii uu hore u dhamaystay
             if (localStorage.getItem('fiqhi_quiz_completed')) {
                 document.getElementById('quiz-body').classList.add('hidden');
                 document.getElementById('already-completed').classList.remove('hidden');
             } else {
+                // Soo saar meeshii u dambeysay ee uu joogay
+                const savedIndex = localStorage.getItem('fiqhi_quiz_progress');
+                const savedScore = localStorage.getItem('fiqhi_quiz_score');
+
+                if (savedIndex !== null && savedScore !== null) {
+                    currentQuestion = parseInt(savedIndex);
+                    score = parseInt(savedScore);
+                }
                 loadQuestion();
             }
         };
+
+        function saveProgress() {
+            localStorage.setItem('fiqhi_quiz_progress', currentQuestion);
+            localStorage.setItem('fiqhi_quiz_score', score);
+        }
 
         function loadQuestion() {
             answered = false;
@@ -264,6 +278,7 @@
                 showFeedback(false, 'Qalad! Jawaabta saxda ah waa calaamadsan tahay.');
             }
 
+            saveProgress(); // Keydi meesha uu joogo
             document.getElementById('score-tracker').innerText = `Dhibcaha: ${score}`;
             document.getElementById('next-btn').classList.remove('hidden');
         }
@@ -286,6 +301,7 @@
                 showFeedback(false, `Qalad! Jawaabta saxda ah waa ${q.correct}.`);
             }
 
+            saveProgress(); // Keydi meesha uu joogo
             document.getElementById('score-tracker').innerText = `Dhibcaha: ${score}`;
             document.getElementById('next-btn').classList.remove('hidden');
         }
@@ -305,6 +321,8 @@
 
         function nextQuestion() {
             currentQuestion++;
+            saveProgress();
+
             if (currentQuestion < questions.length) {
                 loadQuestion();
             } else {
@@ -313,7 +331,9 @@
         }
 
         function finishQuiz() {
+            // Kaliya marka uu 10-ka su'aalood oo dhan ka jawaabo ayaa loo calaamadinayaa inuu dhameeyay
             localStorage.setItem('fiqhi_quiz_completed', 'true');
+            localStorage.removeItem('fiqhi_quiz_progress'); // Nadiifi meeshii hore loo keydiyay
 
             document.getElementById('quiz-body').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
